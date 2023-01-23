@@ -1,25 +1,37 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import RootLayout from "./components/pages/Root";
-import HomePage from "./components/pages/HomePage";
-import NewEventPage from "./components/pages/NewEventPage";
-import EditEventPage from "./components/pages/EditEventPage";
-import EventDetailPage from "./components/pages/EventDetailPage";
-import EventsPage from "./components/pages/EventsPage";
-
-// 7. Output the ID of the selected event on the EventDetailPage
-// BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
+import RootLayout from "./pages/Root";
+import HomePage from "./pages/HomePage";
+import NewEventPage from "./pages/NewEventPage";
+import EditEventPage from "./pages/EditEventPage";
+import EventDetailPage from "./pages/EventDetailPage";
+import EventsPage, { loader as eventsLoader } from "./pages/EventsPage";
+import EventRoot from "./pages/EventRoot";
+import ErrorPage from "./pages/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <HomePage /> },
-      { path: "/events", element: <EventsPage /> },
-      { path: "/events/:eventId", element: <EventDetailPage /> },
-      { path: "event/new", element: <NewEventPage /> },
-      { path: "events/:eventId/edit", element: <EditEventPage /> },
+      { path: "", element: <HomePage /> },
+      {
+        path: "/events",
+        element: <EventRoot />,
+        children: [
+          // 'loader' property takes a function as a value =>
+          // => this function will be executed by react-router, whenever we are about to visit this route
+          {
+            path: "",
+            element: <EventsPage />,
+            loader: eventsLoader,
+          },
+          { path: ":eventId", element: <EventDetailPage /> },
+          { path: "new", element: <NewEventPage /> },
+          { path: ":eventId/edit", element: <EditEventPage /> },
+        ],
+      },
     ],
   },
 ]);
