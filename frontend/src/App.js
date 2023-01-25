@@ -30,12 +30,20 @@ const router = createBrowserRouter([
             loader: eventsLoader,
           },
           {
+            //* We can also use 'route nesting' to share a loader between 2 routes
             path: ":eventId",
-            element: <EventDetailPage />,
+            id: "event-detail",
             loader: eventDetailLoader,
+            children: [
+              {
+                path: "",
+                element: <EventDetailPage />,
+              },
+              { path: "edit", element: <EditEventPage /> },
+            ],
           },
+
           { path: "new", element: <NewEventPage /> },
-          { path: ":eventId/edit", element: <EditEventPage /> },
         ],
       },
     ],
