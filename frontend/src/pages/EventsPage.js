@@ -17,7 +17,7 @@ const EventsPage = () => {
 
 export default EventsPage;
 
-//* It is a convention to create loader functions in a component where they are needed and exporting them for setup in a router
+//* It is a convention to create loader functions in a component where they are needed and export them for setup in a router
 //! Code inside a loader is still executed in the browser (not in a backend server) !
 //! => we can use all browser features in a loader function, except react hooks (since loader is not a react component)
 export const loader = async () => {
@@ -30,6 +30,7 @@ export const loader = async () => {
     // });
     //* Instead of manualy creating a Response object, we can use json() function from react-router-dom
     //* => this function creates a Response object, that includes data in a json format
+    //* => we can also pass a 2nd argument, where we can set a response metadata (e.g. status)
     return json({ message: "Could not fetch events!" }, { status: 500 });
   } else {
     //* We can return our 'response' like this (even it is a promise) in a loader function =>
