@@ -6,6 +6,7 @@ import NewEventPage, { action as newEventAction } from "./pages/NewEventPage";
 import EditEventPage from "./pages/EditEventPage";
 import EventDetailPage, {
   loader as eventDetailLoader,
+  action as deleteEventAction,
 } from "./pages/EventDetailPage";
 import EventsPage, { loader as eventsLoader } from "./pages/EventsPage";
 import EventRoot from "./pages/EventRoot";
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
             path: ":eventId",
             id: "event-detail",
             loader: eventDetailLoader,
+            action: deleteEventAction,
             children: [
               {
                 path: "",
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
               { path: "edit", element: <EditEventPage /> },
             ],
           },
-
+          //* action property also takes a function as a value - it is used for submitting a data (difference from a loader)
           { path: "new", element: <NewEventPage />, action: newEventAction },
         ],
       },

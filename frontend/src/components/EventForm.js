@@ -9,7 +9,7 @@ function EventForm({ method, event }) {
   }
 
   return (
-    // Form component => a request will be sent to our action function
+    // Form component => a request will be sent to our action function automatically
     <Form method="post" className={classes.form}>
       <p>
         <label htmlFor="title">Title</label>
